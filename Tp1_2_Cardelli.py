@@ -20,8 +20,9 @@ def resetear_matriz(matriz,tamaño_bosque):
         for j in range(0,3):
             matriz[(tamaño_bosque//2)-1+i][(tamaño_bosque//2)-1+j] = t_quemado
 
-def simulacion(matriz_incial,t):
-    matriz = copy.deepcopy(matriz_incial)
+def simulacion(matriz_inicial):
+    matriz = copy.deepcopy(matriz_inicial)
+    t = 0
     arboles_quemados = 9 #cantidades_matriz(matriz, tamaño_bosque)["arboles_quemandose"]
     while arboles_quemados > 0:
         for i in range(tamaño_bosque):
@@ -53,26 +54,47 @@ def cantidades_matriz(matriz, tamaño_bosque):
 
 def cant_arboles_vecinos_quemados(matriz,tamaño_bosque,x,y):
     cant = 0
+    resta_x = 1
+    resta_y = 1
     for i in range(0,3):
         for j in range(0,3):
-            try:
-                if matriz[x-1+i][y-1+j] > 0:
-                    cant+=1
-            except IndexError:
-                pass
+            if x == 0:
+                resta_x = 0
+            if x == 29:
+                resta_x = 2
+            if y == 0:
+                resta_y = 0
+            if y == 29:
+                resta_y = 2
+            if matriz[x-resta_x+i][y-resta_y+j] > 0:
+                cant+=1
     return cant
 
 #Inicilizacion de la matriz
-matriz = [[-2 for i in range(tamaño_bosque)] for j in range(tamaño_bosque)]
+matriz = [[-2 for _ in range(tamaño_bosque)] for _ in range(tamaño_bosque)]
 resetear_matriz(matriz,tamaño_bosque)
 matriz_inicial = copy.deepcopy(matriz)
 
 #Loop principal de la simulacion
 for i in range(cant_simulaciones):
-    t = simulacion(matriz_inicial,t)
+    t = 0
+    arboles_quemados = 9 #cantidades_matriz(matriz, tamaño_bosque)["arboles_quemandose"]
+    while arboles_quemados > 0:
+        for i in range(tamaño_bosque):
+            for j in range(tamaño_bosque):
+                if matriz[i][j] > 0:
+                    matriz[i][j] -= 1
+                    if matriz[i][j] == 0:
+                        arboles_quemados -= 1
+                if matriz[i][j] == -1:
+                    if rand.random() <= Px[cant_arboles_vecinos_quemados(matriz, tamaño_bosque, i, j)]:
+                        matriz[i][j] = t_quemado
+                        arboles_quemados += 1
+        t+=1
     t_total += t
     t = 0
+    matriz = copy.deepcopy(matriz_inicial)
     #resetear_matriz(matriz,tamaño_bosque)
 promedio = t_total / cant_simulaciones
 
-print(f"El tiempo promedio que dura un incendio en extinguirse naturalmente luego de {cant_simulaciones} simulaciones es de {promedio} minutos")  
+print(f"El tiempo promedio que tarda un incendio en extinguirse naturalmente luego de {cant_simulaciones} simulaciones es de {promedio} minutos")  

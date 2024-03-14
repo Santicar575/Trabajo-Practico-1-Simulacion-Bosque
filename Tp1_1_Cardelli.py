@@ -44,13 +44,20 @@ def cantidades_matriz(matriz, tamaño_bosque):
 
 def cant_arboles_vecinos_quemados(matriz,tamaño_bosque,x,y):
     cant = 0
+    resta_x = 1
+    resta_y = 1
     for i in range(0,3):
         for j in range(0,3):
-            try:
-                if matriz[x-1+i][y-1+j] > 0:
-                    cant+=1
-            except IndexError:
-                pass
+            if x == 0:
+                resta_x = 0
+            if x == 29:
+                resta_x = 2
+            if y == 0:
+                resta_y = 0
+            if y == 29:
+                resta_y = 2
+            if matriz[x-resta_x+i][y-resta_y+j] > 0:
+                cant+=1
     return cant
 
 #Inicilizacion de la matriz
@@ -65,7 +72,7 @@ for i in range(0,3):
 
 #Loop principal de la simulacion
 while cantidades_matriz(matriz, tamaño_bosque)["arboles_quemandose"] > 0:
-    imprimir_matriz(matriz, tamaño_bosque,t)
+    #imprimir_matriz(matriz, tamaño_bosque,t)
     for i in range(tamaño_bosque):
         for j in range(tamaño_bosque):
             if matriz[i][j] > 0:
@@ -75,7 +82,7 @@ while cantidades_matriz(matriz, tamaño_bosque)["arboles_quemandose"] > 0:
                     #print(colored(Px[cant_arboles_vecinos_quemados(matriz, tamaño_bosque, i, j)],"yellow"))
                     matriz[i][j] = t_quemado
     #time.sleep(60)
-    print("- "*(tamaño_bosque))
+    #print("- "*(tamaño_bosque))
     t+=1     
 imprimir_matriz(matriz, tamaño_bosque,t)
 print("Fin de la simulacion")  
