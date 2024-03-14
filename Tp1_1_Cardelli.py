@@ -1,13 +1,7 @@
 from termcolor import colored
 import random as rand
-import time 
-
-#Parametros de la simulacion
-tamaño_bosque = 30 #N
-d_inicial = 0.6 #Densidad inicial (Di)
-t_quemado = 3 #Tiempo que tarda en quemarse un arbol por completo (Tq)
-Px = [0,0.2,0.4,0.6,0.8,1,1,1,1] #Probabilidad de que un arbol se prenda fuego dependiendo la cantidad de vecinos que se estan quemando"
-t = 0 #Tiempo de la simulacion
+import copy
+from Funciones import *
 
 #Funciones
 def imprimir_matriz(matriz, tamaño_bosque, t):
@@ -27,62 +21,23 @@ def imprimir_matriz(matriz, tamaño_bosque, t):
     print(colored(f"Remaining trees: {cantidades_matriz(matriz, tamaño_bosque)['arboles_sanos']}","green"))
     print(colored(f"Burned trees: {cantidades_matriz(matriz, tamaño_bosque)['arboles_quemados']}","white"))
 
-
-def cantidades_matriz(matriz, tamaño_bosque):
-    arboles_quemados = 0
-    arboles_sanos = 0
-    arboles_quemandose = 0
-    for i in range(tamaño_bosque):
-        for j in range(tamaño_bosque):
-            if matriz[i][j] > 0:
-                arboles_quemandose += 1
-            elif matriz[i][j] == 0:
-                arboles_quemados += 1
-            elif matriz[i][j] == -1:
-                arboles_sanos += 1
-    return {"arboles_quemados":arboles_quemados, "arboles_sanos":arboles_sanos, "arboles_quemandose":arboles_quemandose}
-
-def cant_arboles_vecinos_quemados(matriz,tamaño_bosque,x,y):
-    cant = 0
-    resta_x = 1
-    resta_y = 1
-    for i in range(0,3):
-        for j in range(0,3):
-            if x == 0:
-                resta_x = 0
-            if x == 29:
-                resta_x = 2
-            if y == 0:
-                resta_y = 0
-            if y == 29:
-                resta_y = 2
-            if matriz[x-resta_x+i][y-resta_y+j] > 0:
-                cant+=1
-    return cant
-
 #Inicilizacion de la matriz
 matriz = [[-2 for i in range(tamaño_bosque)] for j in range(tamaño_bosque)]
-for i in range(tamaño_bosque):
-    for j in  range(tamaño_bosque):
-        if rand.random() <= d_inicial:
-            matriz[i][j] = -1
-for i in range(0,3):
-    for j in range(0,3):
-        matriz[(tamaño_bosque//2)-1+i][(tamaño_bosque//2)-1+j] = t_quemado
+setear_matriz(matriz,tamaño_bosque)
 
 #Loop principal de la simulacion
 while cantidades_matriz(matriz, tamaño_bosque)["arboles_quemandose"] > 0:
-    #imprimir_matriz(matriz, tamaño_bosque,t)
+    imprimir_matriz(matriz, tamaño_bosque,t)
+    matriz_paralela = copy.deepcopy(matriz)
     for i in range(tamaño_bosque):
         for j in range(tamaño_bosque):
             if matriz[i][j] > 0:
-                matriz[i][j] -= 1
+                matriz_paralela[i][j] -= 1
             if matriz[i][j] == -1:
                 if rand.random() <= Px[cant_arboles_vecinos_quemados(matriz, tamaño_bosque, i, j)]:
-                    #print(colored(Px[cant_arboles_vecinos_quemados(matriz, tamaño_bosque, i, j)],"yellow"))
-                    matriz[i][j] = t_quemado
-    #time.sleep(60)
-    #print("- "*(tamaño_bosque))
+                    matriz_paralela[i][j] = t_quemado
+    print("- "*(tamaño_bosque))
+    matriz = matriz_paralela
     t+=1     
 imprimir_matriz(matriz, tamaño_bosque,t)
 print("Fin de la simulacion")  
