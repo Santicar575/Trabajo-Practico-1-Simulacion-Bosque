@@ -1,5 +1,5 @@
 import copy
-from Funciones import *
+from Tp1_Funciones_Cardelli import *
 
 #Parametros
 tamaño_bosque = 30 #N

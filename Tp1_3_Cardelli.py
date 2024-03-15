@@ -1,5 +1,5 @@
 import copy
-from Funciones import *
+from Tp1_Funciones_Cardelli import *
 import math
 
 #Parametros
@@ -7,7 +7,7 @@ tamaño_bosque = 30 #N
 t_quemado = 3 #Tiempo que tarda en quemarse un arbol por completo (Tq)
 Px = [0,0.2,0.4,0.6,0.8,1,1,1,1] #Probabilidad de que un arbol se prenda fuego dependiendo la cantidad de vecinos que se estan quemando"
 t = 0 #Tiempo de una simulacion
-cant_simulaciones = 1 #Cantidad de simulaciones a realizar
+cant_simulaciones = 100 #Cantidad de simulaciones a realizar
 cant_arboles_quemados = 0
 d_inicial = 0.1
 
