@@ -8,7 +8,7 @@ t_quemado = 3 #Tiempo que tarda en quemarse un arbol por completo (Tq)
 Px = [0,0.2,0.4,0.6,0.8,1,1,1,1] #Probabilidad de que un arbol se prenda fuego dependiendo la cantidad de vecinos que se estan quemando"
 t = 0 #Tiempo de una simulacion
 t_total = 0 #Tiempo total de todas las simulaciones
-cant_simulaciones = 100 #Cantidad de simulaciones a realizar
+cant_simulaciones = 10 #Cantidad de simulaciones a realizar
 
 #Inicilizacion de la matriz
 matriz = [[-2 for _ in range(tamaño_bosque)] for _ in range(tamaño_bosque)] #Creo una matriz llena de -2 (celdas vacias)

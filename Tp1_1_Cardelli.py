@@ -1,4 +1,3 @@
-from termcolor import colored
 import random as rand
 import copy
 from Tp1_Funciones_Cardelli import *

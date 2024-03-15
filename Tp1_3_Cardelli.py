@@ -1,15 +1,14 @@
 import copy
 from Tp1_Funciones_Cardelli import *
-import math
 
 #Parametros
 tamaño_bosque = 30 #N
+d_inicial = 0.1 #Densidad inicial (Di)
 t_quemado = 3 #Tiempo que tarda en quemarse un arbol por completo (Tq)
 Px = [0,0.2,0.4,0.6,0.8,1,1,1,1] #Probabilidad de que un arbol se prenda fuego dependiendo la cantidad de vecinos que se estan quemando"
 t = 0 #Tiempo de una simulacion
 cant_simulaciones = 100 #Cantidad de simulaciones a realizar
-cant_arboles_quemados = 0
-d_inicial = 0.1
+cant_arboles_quemados = 0 
 
 #Inicilizacion de la matriz
 matriz = [[-2 for _ in range(tamaño_bosque)] for _ in range(tamaño_bosque)] #Creo una matriz llena de -2 (celdas vacias)

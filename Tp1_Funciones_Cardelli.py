@@ -23,16 +23,16 @@ def imprimir_matriz(matriz, tamaño_bosque, t):
     print(colored(f"Burned trees: {cantidades_matriz(matriz, tamaño_bosque)['arboles_quemados']}","white"))
 
 def setear_matriz(matriz,tamaño_bosque,d_inicial,t_quemado):
-    """ Llena la matriz de arboles (dependiendo de la densidad) y llena las 9 casillas centrales con arboles quemados """
+    """ Llena la matriz de arboles (dependiendo de la densidad) y llena las 9 casillas centrales con arboles quemandose """
     #Se recorre toda la matriz y por cada posicion, dependiendo de la densidad, se cambia por un -1 (arbol)
     for i in range(tamaño_bosque):
         for j in  range(tamaño_bosque):
             if rand.random() <= d_inicial:
                 matriz[i][j] = -1
-    #Se cambian las 9 casillas centrales de la matriz por arboles quemados
-    for i in range(3):
-        for j in range(3):
-            matriz[(tamaño_bosque//2)-1+i][(tamaño_bosque//2)-1+j] = t_quemado
+    #Se cambian las 9 casillas centrales de la matriz por arboles quemandose
+    for i in range(-1,2):
+        for j in range(-1,2):
+            matriz[(tamaño_bosque//2)+i][(tamaño_bosque//2)+j] = t_quemado
 
 def simulacion(matriz,tamaño_bosque,t_quemado,Px):
     """ Simula el incendio del bosque hasta que no queden mas arboles quemandose """
@@ -76,10 +76,10 @@ def cant_arboles_vecinos_quemados(matriz,tamaño_bosque,x,y):
     """ Toma una posicion de la matriz y devuelve la cantidad de arboles vecinos que se estan prendiendo fuego """
     cant = 0
     #Recorre las casillas de alrededor de la posicion a analizar
-    for i in range(3):
-        for j in range(3):
+    for i in range(-1,2):
+        for j in range(-1,2):
             #El if asegura que no se produzca un error si se intenta analizar una posicion de la primera o ultima fila o columna
-            if (x-1+i >= 0 and x-1+i < tamaño_bosque and y-1+j >= 0 and y-1+j < tamaño_bosque):
-                if matriz[x-1+i][y-1+j] > 0: #Si en la posicion hay un arbol quemandose (un numero mayor a 0), se aumenta en uno la cantidad
+            if ((x+i >= 0) and (x+i < tamaño_bosque) and (y+j >= 0) and (y+j < tamaño_bosque)):
+                if matriz[x+i][y+j] > 0: #Si en la posicion hay un arbol quemandose (un numero mayor a 0), se aumenta en uno la cantidad
                     cant+=1
     return cant
