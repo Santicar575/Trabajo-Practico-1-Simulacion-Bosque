@@ -1,7 +1,7 @@
 import random as rand
 from termcolor import colored
 import copy
-
+#
 #Funciones
 def imprimir_matriz(matriz, tamaño_bosque, t):
     """ Imprime la matriz del bosque con el formato y colores necesarios """
